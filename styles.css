@@ -1,0 +1,494 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7f9;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+h1 {
+    align-items: center;
+}
+
+header {
+  padding: 16px;
+  background-color: #666161;
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  position: relative;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#toggleSidebarButton {
+  background-color: #333;
+  color: white;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 30px;
+  position: absolute;
+  top: 25px;
+  left: 20px;
+  cursor: pointer;
+  border-radius: 40px;
+}
+
+#toggleSidebarButton:focus {
+  outline: none;
+}
+
+#toggleSidebarButton::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  opacity: 0.4;
+  transition: .3s;
+}
+
+#toggleSidebarButton:active::after{
+  box-shadow: 0 0 0 6px var(--primary-color);
+  opacity: 0;
+}
+
+/* Overlay for background blur effect */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  z-index: 998;
+  display: none;
+}
+
+/* Sidebar styles */
+#sidebar {
+  width: 250px;
+  background-color: #333;
+  color: white;
+  position: fixed;
+  height: 100%;
+  top: 0;
+  left: -250px; /* Initially hidden */
+  transition: left 0.3s ease;
+  z-index: 999; /* Make sure sidebar is on top */
+}
+
+#sidebarContent {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#serverList {
+  list-style: none;
+}
+
+#serverList li {
+  background-color: #444;
+  margin-bottom: 10px;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#serverList li:hover {
+  background-color: #555;
+}
+
+.add-server-btn {
+  background-color: #3c3c3c;
+  color: white;
+  border: none;
+  font-size: 30px;
+  padding: 10px;
+  margin-top: auto;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.add-server-btn:hover {
+    background-color: #555;
+}
+
+/* Center the server form */
+#serverForm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* This makes the form centered */
+  z-index: 999; /* Ensure it is above other content */
+}
+
+/* Add styling to overlay */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none; /* Hidden by default */
+  z-index: 998; /* Just below the form */
+}
+
+/* Close button for sidebar */
+.close-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 20px;
+  position: absolute;
+  top: 10px;
+  right: -50px;
+  cursor: pointer;
+  border-radius: 10px;
+  width: 50px;
+  height: 50px;
+  display: none;
+}
+
+#closeSidebarButton:focus {
+  outline: none;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+#serverPage {
+  padding: 20px;
+  flex: 1;
+}
+
+#chatPage {
+  display: none;
+  flex: 1;
+}
+
+.login-box {
+  position: relative;
+  width: 500px;
+  padding: 40px;
+  text-align: center;
+  background: #333;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.user-box {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.user-box input {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #fff;
+  color: #fff;
+  font-size: 18px;
+  outline: none;
+}
+
+.user-box label {
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 16px;
+  color: #fff;
+  pointer-events: none;
+}
+
+#connectButton {
+    width: 300px;
+  position: relative;
+  display: inline-block;
+  padding: 10px 20px;
+  color: #fff;
+  background: #444;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#connectButton:hover {
+  background: #666;
+}
+
+#connectButton span {
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+
+#connectButton:hover span {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+#connectButton span::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  background: #fff;
+  bottom: 0;
+  left: 0;
+  visibility: hidden;
+  transition: 0.3s;
+}
+
+#connectButton:hover span::after {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 1000px;
+  height: 600px;
+  max-width: 600px;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: relative;
+}
+
+.messages {
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: auto; /* Enables vertical scrolling */
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  max-width: 75%;
+}
+
+.message img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #ddd;
+}
+
+.message p {
+  background-color: #e4f5e2;
+  padding: 0.8rem;
+  border-radius: 8px;
+  word-wrap: break-word;
+  max-width: 80%;
+  font-size: 1rem;
+}
+
+.message .message-right p {
+  background-color: #d1e6f1;
+}
+
+
+  
+  
+
+.input-container {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 100%;
+}
+
+.messageBox {
+  width: fit-content;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fdfdfd;
+  padding: 0 15px;
+  border-radius: 10px;
+  border: 1px solid rgb(63, 63, 63);
+}
+.messageBox:focus-within {
+  border: 1px solid rgb(110, 110, 110);
+}
+.fileUploadWrapper {
+  width: fit-content;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#file {
+  display: none;
+}
+.fileUploadWrapper label {
+  cursor: pointer;
+  width: fit-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.fileUploadWrapper label svg {
+  height: 18px;
+}
+.fileUploadWrapper label svg path {
+  transition: all 0.3s;
+}
+.fileUploadWrapper label svg circle {
+  transition: all 0.3s;
+}
+.fileUploadWrapper label:hover svg path {
+  stroke: #fff;
+}
+.fileUploadWrapper label:hover svg circle {
+  stroke: #fff;
+  fill: #3c3c3c;
+}
+.fileUploadWrapper label:hover .tooltip {
+  display: block;
+  opacity: 1;
+}
+.tooltip {
+  position: absolute;
+  top: -40px;
+  display: none;
+  opacity: 0;
+  color: white;
+  font-size: 10px;
+  text-wrap: nowrap;
+  background-color: #000;
+  padding: 6px 10px;
+  border: 1px solid #3c3c3c;
+  border-radius: 5px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.596);
+  transition: all 0.3s;
+}
+#messageInput {
+  width: 500px;
+  height: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  padding-left: 10px;
+  color: rgb(0, 0, 0);
+}
+#messageInput:focus ~ #sendButton svg path,
+#messageInput:valid ~ #sendButton svg path {
+  fill: #3c3c3c;
+  stroke: white;
+}
+
+#sendButton {
+  width: fit-content;
+  height: 100%;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+#sendButton svg {
+  height: 18px;
+  transition: all 0.3s;
+}
+#sendButton svg path {
+  transition: all 0.3s;
+  fill: #ddd;
+  stroke: #3c3c3c;
+}
+
+#sendButton:hover svg path {
+  fill: #3c3c3c;
+  stroke: white;
+}
+
+.btn {
+  position: absolute;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  background: #e3edf7;
+  padding: 0.4em;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,0);
+  cursor: pointer;
+  transition: transform 0.5s;
+}
+
+.btn:hover {
+  box-shadow: inset 4px 4px 6px -1px rgba(0,0,0,0.2),
+	      inset -4px -4px 6px -1px rgba(255,255,255,0.7),
+	      -0.5px -0.5px 0px rgba(255,255,255,1),
+	      0.5px 0.5px 0px rgba(0,0,0,0.15),
+	      0px 12px 10px -10px rgba(0,0,0,0.05);
+  border: 1px solid rgba(0,0,0,0.1);
+  transform: translateY(0.5em);
+}
+
+.btn svg {
+  transition: transform 0.5s;
+}
+
+.btn:hover svg {
+  transform: scale(0.9);
+  fill: #333333;
+}
+
