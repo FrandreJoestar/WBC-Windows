@@ -156,6 +156,7 @@ linkButton.addEventListener('click', () => {
 delServerButton.addEventListener('click', () => {
 
   //弹出一个窗口 选择要删除的服务器 服务列表器列表从server.json里面读 删也是在这里删 不知道你有没有存在内存里面 内存里有也删
+  //按照注释补全
 
 });
 
