@@ -12,6 +12,7 @@ const toggleSidebarButton = document.getElementById('toggleSidebarButton');
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('overlay');
 const closeSidebarButton = document.getElementById('closeSidebarButton');
+const delServerButton  = document.getElementById('delServerButton');
 const showServerFormButton = document.getElementById('showServerFormButton');
 const serverForm = document.getElementById('serverForm');
 
