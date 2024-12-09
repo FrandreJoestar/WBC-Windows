@@ -5,7 +5,7 @@ const path = require('path');
 
 let mainWindow;
 let ws;
-const serverListPath = path.join('servers.json');
+const serverListPath = path.join('servers.json'); //12.9
 
 // Function to load saved server list from the file
 function loadServerList() {
